@@ -24,6 +24,7 @@ A highly efficient Python-based CLI application for managing and searching email
 - **SQLite Storage**: Efficient local storage of email metadata
 - **FAISS Indexing**: Fast similarity search with HNSW index
 - **Configurable Providers**: Easy setup for different email providers via environment variables
+
 ## Setup Instructions
 
 ### Cloning the Repository
@@ -57,34 +58,9 @@ A highly efficient Python-based CLI application for managing and searching email
    # Edit .env with your email credentials and provider settings
    ```
 
-### Running the Project Locally
-5. Use the following commands to interact with the CLI:
-   
-   **🔥 Primary Commands (Highlighted):**
-   
-   - **Fetch emails** (first run - syncs emails from your provider):
-     ```bash
-     python main.py fetch-emails
-     ```
-   
-   - **Interactive search loop** (recommended for exploring your emails):
-     ```bash
-     python main.py search-loop
-     # Optional: Filter by date
-     python main.py search-loop --after-date 2024-01-01
-     ```
-   
-   **Other useful commands:**
-   - Check status: `python main.py status`
-   - List emails: `python main.py list-emails`
-   - One-time search: `python main.py search "your query"`
-   - Find verification codes: `python main.py search-codes`
-   - View specific email: `python main.py get-email <uid>`
-   - Configure credentials: `python main.py configure`
-
 ## Usage
 
-### 🔥 Primary Workflow (Highlighted)
+### Execution
 
 #### 1. Fetch Emails (Essential First Step)
 ```bash
@@ -156,19 +132,6 @@ python main.py search-codes --pattern "\\d{4}"
 # Search for alphanumeric codes
 python main.py search-codes --pattern "[A-Z0-9]{8}"
 ```
-
-## CLI Commands
-
-| Command | Description | Usage |
-|---------|-------------|-------|
-| **🔥 `fetch-emails`** | **Fetch emails from your provider and update local database and embeddings** | `python main.py fetch-emails` |
-| **🔥 `search-loop`** | **Interactive search loop mode with continuous querying** | `python main.py search-loop [--after-date YYYY-MM-DD]` |
-| `configure` | Securely configure email credentials | `python main.py configure` |
-| `status` | Show comprehensive database and index status | `python main.py status` |
-| `list-emails` | List all email metadata in table format | `python main.py list-emails [--limit N]` |
-| `get-email <uid>` | Get full email body for a specific UID | `python main.py get-email <uid>` |
-| `search <query>` | Advanced search combining semantic similarity and filtering | `python main.py search "query" [--limit N]` |
-| `search-codes` | Search for emails containing verification codes | `python main.py search-codes [--pattern REGEX]` |
 
 ## Configuration
 
@@ -260,6 +223,4 @@ The application includes comprehensive error handling:
 - All processing done locally
 - SQLite database and FAISS index stored locally
 
-## License
 
-MIT License - See LICENSE file for details
