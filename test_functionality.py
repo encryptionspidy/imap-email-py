@@ -43,12 +43,6 @@ def test_search():
     # Search might fail if no embeddings exist, but command should be recognized
     assert result.returncode == 0 or "Error" in result.stdout
 
-def test_search_codes():
-    """Test search-codes command."""
-    print("\n=== Testing Search Codes Command ===")
-    result = run_command("python main.py search-codes")
-    # Command should work but might show no codes
-    assert "No emails with verification codes" in result.stdout or "Found" in result.stdout
 
 def main():
     """Run all tests."""
@@ -59,7 +53,6 @@ def main():
         test_status()
         test_list_emails()
         test_search()
-        test_search_codes()
         print("\n✅ All functionality tests completed successfully!")
         
     except Exception as e:

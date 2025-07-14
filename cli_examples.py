@@ -27,11 +27,8 @@ def show_usage_examples():
     print("   # > Enter search query (or q to quit): invoice")
     print("   # > Enter search query (or q to quit): q")
     
-    print("\n4. Verification Code Search:")
-    print("   python main.py search-codes")
-    print("   python main.py search-codes --pattern '\\d{4,8}'")
     
-    print("\n5. Email Details:")
+    print("\n4. Email Details:")
     print("   python main.py get-email <UID>")
     
     print("\n📊 Performance Features:")
@@ -61,7 +58,6 @@ def run_sample_searches():
         "python main.py status",
         "python main.py list-emails --limit 3",
         "python main.py search 'meeting'",
-        "python main.py search-codes"
     ]
     
     for cmd in searches:

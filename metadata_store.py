@@ -18,8 +18,7 @@ class MetadataStore:
                     subject TEXT,
                     sender TEXT,
                     date TIMESTAMP,
-                    body TEXT,
-                    verification_code INTEGER
+                    body TEXT
                 )
             ''')
             self.connection.execute('''
@@ -34,20 +33,16 @@ class MetadataStore:
         """Update or insert emails into the database."""
         with self.connection:
             for email in emails:
-                # Check if email has verification codes
-                verification_code = 1 if email.get('verification_codes') else 0
-                
                 self.connection.execute('''
-                    INSERT OR REPLACE INTO emails (uid, uidvalidity, subject, sender, date, body, verification_code)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    INSERT OR REPLACE INTO emails (uid, uidvalidity, subject, sender, date, body)
+                    VALUES (?, ?, ?, ?, ?, ?)
                 ''', (
                     email['uid'], 
                     email.get('uidvalidity', 0), 
                     email.get('subject', ''), 
                     email.get('sender', ''), 
                     email.get('date', ''), 
-                    email.get('body', ''), 
-                    verification_code
+                    email.get('body', '')
                 ))
         print(f"[green]Updated {len(emails)} emails in database")
 

@@ -18,7 +18,6 @@ A highly efficient Python-based CLI application for managing and searching email
 - **Multi-Provider Support**: Connect to Gmail, Outlook, Yahoo, Tutanota, ProtonMail, iCloud, Fastmail, and custom IMAP servers
 - **IMAP Email Fetching**: Securely connect to any IMAP server and fetch emails with batching
 - **Semantic Search**: Search emails using natural language with sentence transformers
-- **Verification Code Detection**: Automatically detect and flag emails with verification codes
 - **UIDVALIDITY Handling**: Robust handling of IMAP UIDVALIDITY changes
 - **GPU/CPU Fallback**: Automatic detection and usage of GPU if available
 - **SQLite Storage**: Efficient local storage of email metadata
@@ -120,18 +119,6 @@ python main.py search "verification code" --limit 5
 python main.py search "project update" --limit 10
 ```
 
-### Verification Code Search
-
-```bash
-# Search for 6-digit verification codes
-python main.py search-codes
-
-# Search for 4-digit codes
-python main.py search-codes --pattern "\\d{4}"
-
-# Search for alphanumeric codes
-python main.py search-codes --pattern "[A-Z0-9]{8}"
-```
 
 ## Configuration
 

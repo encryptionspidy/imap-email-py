@@ -116,24 +116,6 @@ class TestSearchManager(unittest.TestCase):
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0]['uid'], 'uid1')
 
-    def test_search_by_verification_code(self):
-        """Test verification code search functionality."""
-        # Mock database results
-        mock_cursor = MagicMock()
-        self.mock_metadata_store.connection.cursor.return_value = mock_cursor
-        mock_cursor.fetchall.return_value = [
-            ('uid1', 'Verification Code', 'noreply@example.com', '2025-07-13', 'Your verification code is 123456'),
-            ('uid2', 'Another Email', 'sender@example.com', '2025-07-12', 'No code here'),
-            ('uid3', 'Login Code', 'security@example.com', '2025-07-11', 'Login code: 789012')
-        ]
-        
-        # Test verification code search
-        results = self.search_manager.search_by_verification_code(r'\d{6}')
-        
-        # Should return emails with 6-digit codes
-        self.assertEqual(len(results), 2)
-        self.assertEqual(results[0]['uid'], 'uid1')
-        self.assertEqual(results[1]['uid'], 'uid3')
 
     def test_parse_date_various_formats(self):
         """Test date parsing with various date formats."""

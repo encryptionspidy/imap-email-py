@@ -249,21 +249,6 @@ def search_loop(after_date: Optional[str] = typer.Option(None, "--after-date", h
         print(f"[red]Error in search loop: {e}")
         raise typer.Exit(1)
 
-@app.command()
-def search_codes(pattern: Optional[str] = typer.Option(r'\d{6}', help="Regex pattern for verification codes")):
-    """Search for emails containing verification codes."""
-    try:
-        search_manager = SearchManager()
-        results = search_manager.search_by_verification_code(pattern)
-        
-        if not results:
-            print("[yellow]No emails with verification codes found")
-        else:
-            print(f"[green]Found {len(results)} emails with verification codes")
-            
-    except Exception as e:
-        print(f"[red]Error during verification code search: {e}")
-        raise typer.Exit(1)
 
 @app.command()
 def configure():

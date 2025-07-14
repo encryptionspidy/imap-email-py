@@ -209,31 +209,6 @@ class SearchManager:
                 except (ValueError, TypeError):
                     return datetime.min
     
-    def search_by_verification_code(self, pattern: str = r'\d{6}') -> List[Dict]:
-        """Search emails containing verification codes."""
-        print(f"[blue]Searching for verification codes with pattern: {pattern}")
-        
-        # Get all emails from database
-        cursor = self.metadata_store.connection.cursor()
-        cursor.execute('SELECT uid, subject, sender, date, body FROM emails ORDER BY date DESC')
-        emails = cursor.fetchall()
-        
-        matching_emails = []
-        for email in emails:
-            uid, subject, sender, date, body = email
-            if re.search(pattern, body):
-                matching_emails.append({
-                    'uid': uid,
-                    'subject': subject,
-                    'sender': sender,
-                    'date': date,
-                    'body_preview': body[:200] + '...' if len(body) > 200 else body,
-                    'full_body': body,
-                    'similarity_score': 1.0  # Default similarity score for verification code search
-                })
-        
-        self._display_search_results(matching_emails)
-        return matching_emails
     
     def keyword_fallback_search(self, query: str, date_after: Optional[str] = None, regex: Optional[str] = None, limit: int = 10) -> List[Dict]:
         """Fallback to keyword search when semantic search fails."""
@@ -317,3 +292,4 @@ class SearchManager:
         
         # Normalize by query length
         return score / len(keywords) if keywords else 0.0
+    

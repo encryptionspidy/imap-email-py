@@ -21,7 +21,6 @@ class TestMetadataStore(unittest.TestCase):
                 'body': 'This is the first test email',
                 'date': '2025-07-13',
                 'uidvalidity': 123456,
-                'verification_codes': ['123456']
             },
             {
                 'uid': '2',
@@ -30,7 +29,6 @@ class TestMetadataStore(unittest.TestCase):
                 'body': 'This is the second test email',
                 'date': '2025-07-14',
                 'uidvalidity': 123456,
-                'verification_codes': []
             }
         ]
     
@@ -72,12 +70,11 @@ class TestMetadataStore(unittest.TestCase):
                 self.assertEqual(count, 2)
                 
                 # Check specific email data
-                cursor.execute('SELECT uid, subject, sender, verification_code FROM emails WHERE uid = ?', ('1',))
+                cursor.execute('SELECT uid, subject, sender FROM emails WHERE uid = ?', ('1',))
                 result = cursor.fetchone()
                 self.assertEqual(result[0], '1')
                 self.assertEqual(result[1], 'Test Email 1')
                 self.assertEqual(result[2], 'sender1@example.com')
-                self.assertEqual(result[3], 1)  # Has verification code
                 
                 store.close()
         finally:
@@ -104,7 +101,6 @@ class TestMetadataStore(unittest.TestCase):
                         'body': 'Modified body',
                         'date': '2025-07-15',
                         'uidvalidity': 123456,
-                        'verification_codes': []
                     }
                 ]
                 

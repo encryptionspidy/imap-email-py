@@ -20,26 +20,6 @@ def parse_email_date(date_string: str) -> Optional[datetime]:
         except (ValueError, TypeError):
             return None
 
-def extract_verification_codes(text: str) -> List[str]:
-    """Extract verification codes from email text."""
-    if not text:
-        return []
-    
-    # Common verification code patterns
-    patterns = [
-        r'\b\d{6}\b',  # 6-digit codes
-        r'\b\d{4}\b',  # 4-digit codes
-        r'\b[A-Z0-9]{8}\b',  # 8-character alphanumeric codes
-        r'code[:\s]*([A-Z0-9]{4,8})',  # "code: ABCD1234"
-        r'verification[:\s]*([A-Z0-9]{4,8})',  # "verification: 123456"
-    ]
-    
-    codes = []
-    for pattern in patterns:
-        matches = re.findall(pattern, text, re.IGNORECASE)
-        codes.extend(matches)
-    
-    return list(set(codes))  # Remove duplicates
 
 def clean_email_body(body: str) -> str:
     """Clean email body text for better embedding."""
@@ -88,7 +68,6 @@ def extract_email_metadata(raw_email: bytes) -> Dict:
         body = msg.get_payload(decode=True).decode('utf-8', errors='ignore')
     
     metadata['body'] = clean_email_body(body)
-    metadata['verification_codes'] = extract_verification_codes(body)
     
     return metadata
 
