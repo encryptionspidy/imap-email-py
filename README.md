@@ -2,6 +2,17 @@
 
 A highly efficient Python-based CLI application for managing and searching emails from multiple providers using IMAP with semantic search capabilities powered by FAISS and sentence transformers.
 
+## Screenshots
+
+### Search Loop in Action
+![Search Loop Demo](eg%20images/250714_11h26m57s_screenshot.png)
+
+### Semantic Search Results
+![Semantic Search Results](eg%20images/250714_11h29m17s_screenshot.png)
+
+### Email Fetching Process
+![Email Fetching](eg%20images/250714_11h32m35s_screenshot.png)
+
 ## Features
 
 - **Multi-Provider Support**: Connect to Gmail, Outlook, Yahoo, Tutanota, ProtonMail, iCloud, Fastmail, and custom IMAP servers
@@ -48,38 +59,62 @@ A highly efficient Python-based CLI application for managing and searching email
 
 ### Running the Project Locally
 5. Use the following commands to interact with the CLI:
-   - Fetch emails (first run):
+   
+   **🔥 Primary Commands (Highlighted):**
+   
+   - **Fetch emails** (first run - syncs emails from your provider):
      ```bash
      python main.py fetch-emails
      ```
-   - Check status:
+   
+   - **Interactive search loop** (recommended for exploring your emails):
      ```bash
-     python main.py status
+     python main.py search-loop
+     # Optional: Filter by date
+     python main.py search-loop --after-date 2024-01-01
      ```
-
-   - List all emails (default: 50 emails):
-     ```bash
-     python main.py list-emails
-     ```
-
-   - Semantic search:
-     ```bash
-     python main.py search "your query"
-     ```
-   - Search for verification codes:
-     ```bash
-     python main.py search-codes
-     ```
+   
+   **Other useful commands:**
+   - Check status: `python main.py status`
+   - List emails: `python main.py list-emails`
+   - One-time search: `python main.py search "your query"`
+   - Find verification codes: `python main.py search-codes`
+   - View specific email: `python main.py get-email <uid>`
+   - Configure credentials: `python main.py configure`
 
 ## Usage
 
-### Initial Setup and Email Fetching
+### 🔥 Primary Workflow (Highlighted)
 
+#### 1. Fetch Emails (Essential First Step)
 ```bash
-# Fetch emails from Gmail (first run)
+# Fetch emails from your configured provider and update local database
 python main.py fetch-emails
+```
+**What it does:**
+- Connects to your email provider via IMAP
+- Downloads email metadata and content
+- Generates semantic embeddings for search
+- Updates the local SQLite database and FAISS index
 
-# Check status
+#### 2. Interactive Search Loop (Recommended)
+```bash
+# Enter interactive search mode
+python main.py search-loop
+
+# Or filter by date
+python main.py search-loop --after-date 2024-01-01
+```
+**What it does:**
+- Opens an interactive search interface
+- Allows continuous searching without restarting
+- Supports natural language queries
+- Shows search results with similarity scores
+- Type 'quit' or 'exit' to leave the loop
+
+#### 3. Check Status
+```bash
+# Check database and index status
 python main.py status
 ```
 
@@ -96,17 +131,17 @@ python main.py list-emails --limit 100
 python main.py get-email <uid>
 ```
 
-### Semantic Search
+### Other Search Options
 
 ```bash
-# Search for emails about meetings
+# One-time semantic search
 python main.py search "meeting tomorrow"
-
-# Search for emails about payments
-python main.py search "payment invoice receipt"
 
 # Limit search results
 python main.py search "verification code" --limit 5
+
+# Advanced search with filters
+python main.py search "project update" --limit 10
 ```
 
 ### Verification Code Search
@@ -124,14 +159,16 @@ python main.py search-codes --pattern "[A-Z0-9]{8}"
 
 ## CLI Commands
 
-| Command | Description |
-|---------|-------------|
-| `fetch-emails` | Sync emails from Gmail to local database and FAISS index |
-| `list-emails` | Show email metadata in a table format |
-| `get-email <uid>` | Display full email body for specific UID |
-| `search <query>` | Semantic search using natural language |
-| `search-codes` | Find emails containing verification codes |
-| `status` | Show database and index statistics |
+| Command | Description | Usage |
+|---------|-------------|-------|
+| **🔥 `fetch-emails`** | **Fetch emails from your provider and update local database and embeddings** | `python main.py fetch-emails` |
+| **🔥 `search-loop`** | **Interactive search loop mode with continuous querying** | `python main.py search-loop [--after-date YYYY-MM-DD]` |
+| `configure` | Securely configure email credentials | `python main.py configure` |
+| `status` | Show comprehensive database and index status | `python main.py status` |
+| `list-emails` | List all email metadata in table format | `python main.py list-emails [--limit N]` |
+| `get-email <uid>` | Get full email body for a specific UID | `python main.py get-email <uid>` |
+| `search <query>` | Advanced search combining semantic similarity and filtering | `python main.py search "query" [--limit N]` |
+| `search-codes` | Search for emails containing verification codes | `python main.py search-codes [--pattern REGEX]` |
 
 ## Configuration
 
